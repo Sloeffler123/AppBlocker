@@ -13,7 +13,7 @@
 
 namespace AppBlockerAddFilesToList
 {
-    public class FileChecker
+    public class Files
     {
         public static List<string> filePaths = new();
         // main loop
@@ -22,7 +22,6 @@ namespace AppBlockerAddFilesToList
             AddFileToList();
             DisplayFiles();
         }
-
         // check if file exists and add the path to a list 
         public static void AddFileToList()
         {
@@ -95,6 +94,51 @@ namespace AppBlockerAddFilesToList
             }
         }
 
+        // time frame to block
+        public static string TimeToBlockApps()
+        {
+            string timeFrame = "";
+            while (true)
+            {
+                Console.WriteLine("What time frame would you like to block these apps? EX: 0600-1400");
+                Console.WriteLine();
+                timeFrame = Console.ReadLine();
+                if (CheckIfTimeFrameValid(timeFrame))
+                {
+                    Console.WriteLine($"Apps will be blocked from {timeFrame}");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Please input a valid time frame");
+                }
+            }
+            return timeFrame;
+        }
 
+        // check if time frame given is valid 
+        public static bool CheckIfTimeFrameValid(string timeFrame)
+        {
+            if (timeFrame.Length < 9 || timeFrame.Length > 9)
+            {
+                return false;
+            }
+            foreach (var num in timeFrame)
+                {
+                    if (num == '-')
+                    {
+                        continue;
+                    }
+                    else if ((int)num <= 24 && (int)num >= 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            return true;
+        }
     }
 }
