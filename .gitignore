@@ -1,2 +1,4 @@
 obj/
 bin/
+random_words.txt
+user_files_to_block.txt
