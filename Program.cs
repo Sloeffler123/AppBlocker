@@ -1,16 +1,5 @@
-﻿
-// goal
-// app blocker that blocks applications that are inputed for a certain time period
-// user c# ui to make this more interactive 
-// use creative ways to disable the software like typing 100 words, ect
-// make a safety net 
-// make sure it runs with low effort in the background
-// 
-
-// make a class that checks if the users file they inputed exists
-
-
-
+﻿using AppBlockerAddFilesToList;
+using AppBlockerRunApplication;
 namespace AppBlockerAddFilesToList
 {
     public class Files
@@ -29,11 +18,10 @@ namespace AppBlockerAddFilesToList
         {
             HowToUse();
             Console.WriteLine();
-            
-            // AddFileToList();
-            // DisplayFiles();
-
+            UserInterface();
+            RunApplication.DetectIfFilesAreRunning();
         }
+        // loop for the user to interact with and decide what they want to do
         public static void UserInterface()
         {
             while (true)
@@ -53,12 +41,15 @@ namespace AppBlockerAddFilesToList
                 {
                     DeleteFileFromList();
                 }
+                else if (userInput == "4")
+                {
+                    TimeToBlockApps();
+                }
+                else
+                {
+                    break;
+                }
             }
-            
-
-            
-
-
         }
         // check if file exists and add the path to a list 
         public static void AddFileToList()
@@ -75,8 +66,17 @@ namespace AppBlockerAddFilesToList
                         string path = Console.ReadLine();
                         if (File.Exists(path))
                         {
-                            Console.WriteLine($"{path} exists");
-                            filePaths.Add(path);
+                            Console.WriteLine($"{path} - Added");
+                            if (path.EndsWith(".exe"))
+                            {
+                                var newPath = path.Replace(".exe", "");
+                                filePaths.Add(newPath);
+                            }
+                            else
+                            {
+                                filePaths.Add(path);
+                            }
+                            
                             break;
                         }
                         else
@@ -89,12 +89,13 @@ namespace AppBlockerAddFilesToList
                 {
                     while (true)
                     {
-                        Console.WriteLine("Please input the file you would like to block");
+                        Console.WriteLine("Please input the folder you would like to block");
                         string path = Console.ReadLine();
                         if (Directory.Exists(path))
                         {
-                            Console.WriteLine($"{path} exists.");
-                            filePaths.Add(path);
+                            Console.WriteLine($"{path} - Added");
+                            // open directory and add the files to the list to block
+                            DirectoryFilesToBlock(path);
                             break;
                         }
                         else
@@ -106,7 +107,7 @@ namespace AppBlockerAddFilesToList
                 else
                 {
                     TimeToBlockApps();
-                    
+
                     if (filePaths.Count > 0)
                     {
                         foreach (var word in filePaths)
@@ -118,11 +119,12 @@ namespace AppBlockerAddFilesToList
                     break;
                 }
             }
+
         }
         // diplay files
         public static void DisplayFiles()
         {
-            
+
             foreach (var path in filePaths)
             {
                 Console.WriteLine(path);
@@ -132,27 +134,27 @@ namespace AppBlockerAddFilesToList
         public static void DeleteFileFromList()
         {
             while (true)
+            {
+                Console.WriteLine("Which file would you like to delete? Please input the path");
+                DisplayFiles();
+                Console.WriteLine();
+                string pathToDelete = Console.ReadLine();
+                if (!filePaths.Contains(pathToDelete))
                 {
-                    Console.WriteLine("Which file would you like to delete? Please input the path");
-                    DisplayFiles();
-                    Console.WriteLine();
-                    string pathToDelete = Console.ReadLine();
-                    if (!filePaths.Contains(pathToDelete))
-                    {
-                        Console.WriteLine("Please input a path in the list");
-                    }
-                    else
-                    {
-                        if (UserTyping())
-                        {
-                            Console.WriteLine($"{pathToDelete} deleted");
-                            filePaths.Remove(pathToDelete);
-                            File.WriteAllLines("user_files_to_block.txt",filePaths);
-                            break;
-                        }
-
-                    }
+                    Console.WriteLine("Please input a path in the list");
                 }
+                else
+                {
+                    if (UserTyping())
+                    {
+                        Console.WriteLine($"{pathToDelete} deleted");
+                        filePaths.Remove(pathToDelete);
+                        File.WriteAllLines("user_files_to_block.txt", filePaths);
+                        break;
+                    }
+
+                }
+            }
         }
         // time frame to block
         public static void TimeToBlockApps()
@@ -160,10 +162,14 @@ namespace AppBlockerAddFilesToList
             string timeFrame = "";
             while (true)
             {
-                Console.WriteLine("What time frame would you like to block these apps? EX: 0600-1400");
+                Console.WriteLine("What time frame would you like to block these apps? EX: 0600-1400 / (1) Exit");
                 Console.WriteLine();
                 timeFrame = Console.ReadLine();
-                if (CheckIfTimeFrameValid(timeFrame))
+                if (timeFrame == "1")
+                {
+                    Environment.Exit(0);
+                }
+                else if (CheckIfTimeFrameValid(timeFrame))
                 {
                     Console.WriteLine($"Apps will be blocked from {timeFrame}");
                     break;
@@ -175,7 +181,7 @@ namespace AppBlockerAddFilesToList
             }
             timeFrameToBlock = timeFrame;
         }
-        // check if time frame given is valid 
+        // check if time frame given is valid (Helper method)
         public static bool CheckIfTimeFrameValid(string timeFrame)
         {
             if (timeFrame.Length < 9 || timeFrame.Length > 9)
@@ -184,11 +190,12 @@ namespace AppBlockerAddFilesToList
             }
             foreach (var num in timeFrame)
             {
+                int newNum = (int)char.GetNumericValue(num);
                 if (num == '-')
                 {
                     continue;
                 }
-                else if ((int)num <= 24 && (int)num >= 0)
+                else if (newNum <= 9 && newNum >= 0)
                 {
                     continue;
                 }
@@ -199,10 +206,7 @@ namespace AppBlockerAddFilesToList
             }
             return true;
         }
-
-        // type test. just open a file of randomly typed words (200 words) and compare to what the user typed if any errors make them start over
-        // make sure it randomly selects a block of 200 words
-        // make it a txt file and download a ton of words
+        // display random words for the user to unlock
         public static List<string> DisplayRandomWords()
         {
             List<string> fileContents = File.ReadAllLines("C:\\Users\\samlo\\OneDrive\\Desktop\\tempcsharp\\AppBlocker\\random_words.txt").ToList();
@@ -217,7 +221,7 @@ namespace AppBlockerAddFilesToList
             }
             return wordsFromFile;
         }
-
+        // where user will type the random words
         public static bool UserTyping()
         {
 
@@ -237,6 +241,23 @@ namespace AppBlockerAddFilesToList
                 }
             }
             return true;
+        }
+
+        public static void DirectoryFilesToBlock(string path)
+        {
+            string[] files = Directory.GetFiles(path);
+            foreach (var file in files)
+            {
+                if (Directory.Exists(file))
+                {
+                    continue;
+                }
+                if (file.EndsWith(".exe"))
+                {
+                    var newPath = file.Replace(".exe", "");
+                    filePaths.Add(newPath);
+                }
+            }
         }
     }
 }
