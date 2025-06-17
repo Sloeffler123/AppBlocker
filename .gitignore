@@ -2,3 +2,9 @@ obj/
 bin/
 random_words.txt
 user_files_to_block.txt
+time_frame_to_block.txt
+AppBlocker.sln
+AppBlocker.csproj
+bin/Debug/net9.0/AppBlocker.pdb
+bin/Debug/net9.0/AppBlocker.exe
+bin/Debug/net9.0/AppBlocker.dll

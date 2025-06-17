@@ -1,5 +1,5 @@
-﻿using AppBlockerAddFilesToList;
-using AppBlockerRunApplication;
+﻿using AppBlockerRunApplication;
+
 namespace AppBlockerAddFilesToList
 {
     public class Files
@@ -180,6 +180,7 @@ namespace AppBlockerAddFilesToList
                 }
             }
             timeFrameToBlock = timeFrame;
+            File.WriteAllText("time_frame_to_block.txt", timeFrame);
         }
         // check if time frame given is valid (Helper method)
         public static bool CheckIfTimeFrameValid(string timeFrame)

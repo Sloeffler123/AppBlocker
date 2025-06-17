@@ -1,6 +1,5 @@
+using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 
 namespace AppBlockerRunApplication
 {
@@ -8,20 +7,38 @@ namespace AppBlockerRunApplication
     {
         public static void DetectIfFilesAreRunning()
         {
-            List<string> paths = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\tempcsharp\AppBlocker\user_files_to_block.txt")
-                                       .Select(p => p.Trim().ToLower()).ToList();
+            DateTime currentTime = DateTime.Now;
+            var convertTimeToMilitary = currentTime.ToString("HHmm");
+            List<string> paths = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\tempcsharp\AppBlocker\user_files_to_block.txt").Select(p => p.Trim().ToLower()).ToList();
             var targetPaths = FindEndOfPath(paths);
-            foreach (var path in targetPaths)
+            var time = File.ReadAllLines("time_frame_to_block.txt");
+            (string firstTime, string secondTime) = BreakUpTimes(time);
+            var newFirstTime = int.Parse(firstTime);
+            var newSecondTime = int.Parse(secondTime);
+            var newMilitaryTime = int.Parse(convertTimeToMilitary);
+            bool on = true;
+            while (on)
             {
-                foreach (var process in Process.GetProcessesByName(path))
+                foreach (var path in targetPaths)
                 {
-                    process.Kill();
-                    process.WaitForExit();
-                    
+                    foreach (var process in Process.GetProcessesByName(path))
+                    {
+
+                        if (newMilitaryTime > newFirstTime)
+                        {
+                            process.Kill();
+                            process.WaitForExit();
+                        }
+                        else if (newSecondTime > newMilitaryTime)
+                        {
+                            on = false;
+                            break;
+                        }
+                    }
                 }
-            }
+            }   
         }
-        
+
         public static List<string> FindEndOfPath(List<string> paths)
         {
             List<string> finalPaths = new();
@@ -43,6 +60,33 @@ namespace AppBlockerRunApplication
                 }
             }
             return finalPaths;
+        }
+
+        public static (string, string) BreakUpTimes(string[] times)
+        {
+            string firstTime = "";
+            string secondTime = "";
+            bool holder = false;
+            foreach (var time in times)
+            {
+                foreach (var num in time)
+                {
+                    if (num == '-')
+                    {
+                        holder = true;
+                        continue;
+                    }
+                    if (holder)
+                    {
+                        secondTime += num;
+                    }
+                    else
+                    {
+                        firstTime += num;
+                    }
+                }
+            }
+            return (firstTime, secondTime);
         }
     }
 }
