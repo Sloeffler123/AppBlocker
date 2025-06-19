@@ -5,3 +5,7 @@ user_files_to_block.txt
 time_frame_to_block.txt
 AppBlocker.sln
 AppBlocker.csproj
+UnitTesting/AppBlocker.Tests/bin
+AppBlocker.Tests.csproj
+UnitTesting.csproj
+.editorconfig
