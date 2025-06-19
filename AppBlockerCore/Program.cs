@@ -24,16 +24,23 @@ namespace AppBlockerAddFilesToList
             RunApplication.DetectIfFilesAreRunning();
         }
         // loop for the user to interact with and decide what they want to do
+        public static string PromptUserInterfaceInput()
+        {
+            Console.WriteLine("What would you like to do? (1) Add files and folders/(2) Display files and folders/(3) Delete files and folders/(4) Change time frame/(5) Exit");
+            Console.WriteLine();
+            string userInput = Console.ReadLine();
+            return userInput;
+        }
+
         public static void UserInterface()
         {
             while (true)
             {
-                Console.WriteLine("What would you like to do? (1) Add files and folders/(2) Display files and folders/(3) Delete files and folders/(4) Change time frame/(5) Exit");
-                Console.WriteLine();
-                string userInput = Console.ReadLine();
+                string userInput = PromptUserInterfaceInput();
+
                 if (userInput == "1")
                 {
-                    PromptUserForFileOrDirectory();
+                    AddFileOrDirectory();
                 }
                 else if (userInput == "2")
                 {
@@ -41,15 +48,19 @@ namespace AppBlockerAddFilesToList
                 }
                 else if (userInput == "3")
                 {
-                    PromptUserDeletePath();
+                    DeleteUserPath();
                 }
                 else if (userInput == "4")
                 {
                     PromptUserForTimeFrame();
                 }
-                else
+                else if (userInput == "5")
                 {
                     break;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid input");
                 }
             }
         }
@@ -85,12 +96,19 @@ namespace AppBlockerAddFilesToList
             }
         }
 
-        public static void PromptUserForFileOrDirectory()
+        public static string PromptForFileOrDirectory()
+        {
+            Console.WriteLine("Would you like to add a (1) file (2) directory (3) exit?");
+            var userInput = Console.ReadLine();
+            return userInput;
+        }
+
+        public static void AddFileOrDirectory()
         {
             while (true)
             {
-                Console.WriteLine("Would you like to add a (1) file (2) directory (3) exit?");
-                var userInput = Console.ReadLine();
+                var userInput = PromptForFileOrDirectory();
+
                 if (userInput == "1")
                 {
                     AddFile(userInput);
@@ -119,14 +137,20 @@ namespace AppBlockerAddFilesToList
             }
         }
         // delete file from list
-        public static void PromptUserDeletePath()
+        public static string PromptUserForPathToDelete()
+        {
+            Console.WriteLine("Which file would you like to delete? Please input the path / (1) Exit");
+            DisplayFiles();
+            Console.WriteLine();
+            var userInput = Console.ReadLine();
+            return userInput;
+        }
+
+        public static void DeleteUserPath()
         {
             while (true)
             {
-                Console.WriteLine("Which file would you like to delete? Please input the path / (1) Exit");
-                DisplayFiles();
-                Console.WriteLine();
-                var userInput = Console.ReadLine();
+                var userInput = PromptUserForPathToDelete();
                 if (userInput == "1")
                 {
                     break;
@@ -156,12 +180,18 @@ namespace AppBlockerAddFilesToList
             return false;
         }
 
-        public static void PromptUserForTimeFrame()
+        public static string PromptUserForTimeFrame()
+        {
+            Console.WriteLine("What time frame would you like to block these apps? EX: 0600-1400 / (1) Exit");
+            var userInput = Console.ReadLine();
+            return userInput;
+        }
+
+        public static void TimeFrameToBlock()
         {
             while (true)
             {
-                Console.WriteLine("What time frame would you like to block these apps? EX: 0600-1400 / (1) Exit");
-                var userInput = Console.ReadLine();
+                var userInput = PromptUserForTimeFrame();
                 if (userInput == "1")
                 {
                     Console.WriteLine("GoodBye");
