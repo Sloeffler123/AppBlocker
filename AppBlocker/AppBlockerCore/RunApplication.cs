@@ -1,9 +1,9 @@
-using System.ComponentModel;
+
 using System.Diagnostics;
 
 namespace AppBlockerRunApplication
 {
-    class RunApplication
+    public static class RunApplication
     {
         public static void DetectIfFilesAreRunning()
         {
