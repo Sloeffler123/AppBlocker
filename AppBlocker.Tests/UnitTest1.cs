@@ -6,10 +6,23 @@ namespace AppBlocker.Tests;
 public class UnitTest1
 {
     [Fact]
-    public void Test1()
+    public void CheckIfTimeIsTrue()
     {
-        string time = "0600-1400";
-        var result = Files.CheckIfTimeFrameValid(time);
-        Assert.True(result);
+        Assert.True(Files.CheckIfTimeFrameValid("0600-1400"));
+    }
+    [Fact]
+    public void CheckIfTimeIsFalseShort()
+    {
+        Assert.False(Files.CheckIfTimeFrameValid("0600-400"));
+    }
+    [Fact]
+    public void CheckifTimeIsFalseLetters()
+    {
+        Assert.False(Files.CheckIfTimeFrameValid("0600-a400"));
+    }
+    [Fact]
+    public void CheckIfTimeIsFalseLong()
+    {
+        Assert.False(Files.CheckIfTimeFrameValid("0600-14000"));
     }
 }
