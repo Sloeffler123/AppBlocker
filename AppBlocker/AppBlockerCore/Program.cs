@@ -76,6 +76,10 @@ namespace AppBlockerAddFilesToList
                 Console.WriteLine($"{path} - Added");
                 filePaths.Add(path);
             }
+            else
+            {
+                Console.WriteLine($"{path} could not be found. Please double check spelling");
+            }
         }
 
         public static void AddDirectory(string path)
@@ -86,13 +90,17 @@ namespace AppBlockerAddFilesToList
                 // open directory and add the files to the list to block
                 DirectoryFilesToBlock(path);
             }
+            else
+            {
+                Console.WriteLine($"{path} could not be found. Please double check spelling");
+            }
         }
 
         public static void WritePathsToBlock()
         {
             foreach (var word in filePaths)
             {
-                File.WriteAllText("user_files_to_block.txt", word);
+                File.WriteAllText("C:\\Users\\samlo\\OneDrive\\Desktop\\AppBlockerClean\\AppBlocker\\AppBlockerCore\\user_files_to_block.txt", word);
             }
         }
 
@@ -102,24 +110,34 @@ namespace AppBlockerAddFilesToList
             var userInput = Console.ReadLine();
             return userInput;
         }
-
+        public static string PromptUsersPath()
+        {
+            Console.WriteLine("Please input the path you would like to block");
+            var input = Console.ReadLine();
+            return input;
+        }
         public static void AddFileOrDirectory()
         {
             while (true)
             {
                 var userInput = PromptForFileOrDirectory();
+                Console.WriteLine();
+                if (userInput == "3")
+                {
+                    TimeFrameToBlock();
+                    WritePathsToBlock();
 
+                    break;
+                }
+                var input = PromptUsersPath();
+                
                 if (userInput == "1")
                 {
-                    AddFile(userInput);
+                    AddFile(input);
                 }
                 else if (userInput == "2")
                 {
-                    AddDirectory(userInput);
-                }
-                else if (userInput == "3")
-                {
-                    break;
+                    AddDirectory(input);
                 }
                 else
                 {
@@ -200,7 +218,7 @@ namespace AppBlockerAddFilesToList
                 if (TryGetValidTimeFrame(userInput))
                 {
                     Console.WriteLine($"Apps will be blocked from {timeFrameToBlock}");
-                    File.WriteAllText("time_frame_to_block.txt", timeFrameToBlock);
+                    File.WriteAllText("C:\\Users\\samlo\\OneDrive\\Desktop\\AppBlockerClean\\AppBlocker\\AppBlockerCore\\time_frame_to_block.txt", timeFrameToBlock);
                     break;
                 }
                 else
@@ -237,7 +255,7 @@ namespace AppBlockerAddFilesToList
         // display random words for the user to unlock
         public static List<string> DisplayRandomWords()
         {
-            List<string> fileContents = File.ReadAllLines("C:\\Users\\samlo\\OneDrive\\Desktop\\tempcsharp\\AppBlocker\\random_words.txt").ToList();
+            List<string> fileContents = File.ReadAllLines("C:\\Users\\samlo\\OneDrive\\Desktop\\AppBlockerClean\\AppBlocker\\AppBlockerCore\\random_words.txt").ToList();
             List<string> wordsFromFile = new();
             Random random = new();
             for (int i = 0; i < 5; i++)
@@ -265,7 +283,7 @@ namespace AppBlockerAddFilesToList
                 else
                 {
                     filePaths.Remove(userInput);
-                    File.WriteAllLines("user_files_to_block.txt", filePaths);
+                    File.WriteAllLines("C:\\Users\\samlo\\OneDrive\\Desktop\\AppBlockerClean\\AppBlocker\\AppBlockerCore\\user_files_to_block.txt", filePaths);
                     break;
                 }
             }

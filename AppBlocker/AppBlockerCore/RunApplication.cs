@@ -9,9 +9,9 @@ namespace AppBlockerRunApplication
         {
             DateTime currentTime = DateTime.Now;
             var convertTimeToMilitary = currentTime.ToString("HHmm");
-            List<string> paths = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\tempcsharp\AppBlocker\user_files_to_block.txt").Select(p => p.Trim().ToLower()).ToList();
+            List<string> paths = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\AppBlockerClean\AppBlocker\AppBlockerCore\user_files_to_block.txt").Select(p => p.Trim().ToLower()).ToList();
             var targetPaths = FindEndOfPath(paths);
-            var time = File.ReadAllLines("time_frame_to_block.txt");
+            var time = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\AppBlockerClean\AppBlocker\AppBlockerCore\time_frame_to_block.txt");
             (string firstTime, string secondTime) = BreakUpTimes(time);
             var newFirstTime = int.Parse(firstTime);
             var newSecondTime = int.Parse(secondTime);
