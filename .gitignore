@@ -1,0 +1,8 @@
+bin/
+obj/
+AppBlocker.Tests.csproj
+AppBlocker.csproj
+AppBlocker.sln
+time_frame_to_block.txt
+random_words.txt
+user_files_to_block.txt
