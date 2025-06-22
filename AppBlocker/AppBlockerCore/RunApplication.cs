@@ -1,6 +1,6 @@
 
 using System.Diagnostics;
-
+using System;
 namespace AppBlockerRunApplication
 {
     public static class RunApplication
@@ -13,7 +13,15 @@ namespace AppBlockerRunApplication
             var targetPaths = FindEndOfPath(paths);
             var time = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\AppBlockerClean\AppBlocker\AppBlockerCore\time_frame_to_block.txt");
             (string firstTime, string secondTime) = BreakUpTimes(time);
-            var newFirstTime = int.Parse(firstTime);
+            var newFirstTime = 0;
+            try
+            {
+                newFirstTime = int.Parse(firstTime);
+            }
+            catch (System.FormatException)
+            {
+                System.Environment.Exit(0);
+            }
             var newSecondTime = int.Parse(secondTime);
             var newMilitaryTime = int.Parse(convertTimeToMilitary);
             bool on = true;
