@@ -7,6 +7,7 @@ public partial class Form1 : Form
 {
     private int boxCount = 0;
     private int containterCount = 0;
+    private int userID = 0;
     public Form1()
     {
         InitializeComponent();
@@ -117,40 +118,68 @@ public partial class Form1 : Form
             return;
         }
         UserData userData = container.Tag as UserData;
+        List<TextBox> textBoxes = new();
         foreach (Control ctrl in container.Controls)
         {
-                if (ctrl is TextBox tb)
+            if (ctrl is TextBox tb && tb.Text.Length > 0)
+            {
+                tb.Enabled = false;
+                if (tb.Name.StartsWith("textbox1_"))
                 {
-                    tb.Enabled = false;
-                    if (tb.Name.StartsWith("textbox1_"))
-                    {
-                        userData.Blockset = tb.Text;
-                    }
-                    else if (tb.Name.StartsWith("textbox2_"))
-                    {
-                        userData.Time = tb.Text;
-                    }
-                else if (tb.Name.StartsWith("textbox3_"))
-                    {
-                        userData.Days = tb.Text;
-                    }
-                    else if (tb.Name.StartsWith("textbox4_"))
-                    {
-                        userData.Paths = tb.Text;
-                    }
+                    userData.Blockset = tb.Text;
+                    textBoxes.Add(tb);
                 }
-                else if (ctrl is Button btn)
+                else if (tb.Name.StartsWith("textbox2_"))
                 {
+                    userData.Time = tb.Text;
+                    textBoxes.Add(tb);
+                }
+                else if (tb.Name.StartsWith("textbox3_"))
+                {
+                    userData.Days = tb.Text;
+                    textBoxes.Add(tb);
+                }
+                else if (tb.Name.StartsWith("textbox4_"))
+                {
+                    userData.Paths = tb.Text;
+                    textBoxes.Add(tb);
+                }
+                    
+            }
+            else if (ctrl is Button btn)
+            {
                     if (btn.Name == "EditButton")
                     {
-                       btn.Visible = true;
+                        btn.Visible = true;
                     }
-                }
+                    
+            }
+            else
+            {
+              MessageBox.Show("Cant save null data");
+            }
         }
-        
-        string jsonString = JsonSerializer.Serialize(userData, new JsonSerializerOptions { WriteIndented = true});
-        MessageBox.Show(jsonString, "Data");
-
+        if (CheckIfTextIsEmpty(textBoxes))
+        {
+            string jsonString = JsonSerializer.Serialize(userData, new JsonSerializerOptions { WriteIndented = true });
+            MessageBox.Show(jsonString, "Data");
+            File.WriteAllText($"user{userID++}_data.json", jsonString);
+        }
+        else
+        {
+            Console.WriteLine("Please enter a valid input");
+        }
+    }
+    private bool CheckIfTextIsEmpty(List<TextBox> textBoxesList)
+    {
+        foreach (var textBox in textBoxesList)
+        {
+            if (textBox.Text.Length == 0 || textBoxesList.Count != 4)
+            {
+                return false;
+            }
+        }
+        return true;
     }
     private void EditButton_Clicked(object sender, EventArgs args)
     {
