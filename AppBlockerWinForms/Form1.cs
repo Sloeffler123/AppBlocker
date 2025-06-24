@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Text.Json;
+
 namespace AppBlockerWinForms;
 
 public partial class Form1 : Form
@@ -8,8 +11,16 @@ public partial class Form1 : Form
     {
         InitializeComponent();
     }
+    public class UserData
+    {
+        public string Blockset { get; set; }
+        public string Time { get; set; }
+        public string Days { get; set; }
+        public string Paths { get; set; }
+    }
     private void AddButton_Click(object sender, EventArgs e)
     {
+        
         // if containter not filled out and is greater than 1 pass
         Panel container = new Panel();
         container.Width = 736;
@@ -40,7 +51,7 @@ public partial class Form1 : Form
         newTextBox3.TextAlign = HorizontalAlignment.Center;
         newTextBox3.Width = 506;
         newTextBox3.Height = 23;
-        newTextBox3.Name = $"textbox2_{boxCount++}";
+        newTextBox3.Name = $"textbox3_{boxCount++}";
         newTextBox3.Text = "Days (EX: Monday-Wednesday)";
         newTextBox3.Location = new Point(107, 61);
 
@@ -49,7 +60,7 @@ public partial class Form1 : Form
         newTextBox4.Multiline = true;
         newTextBox4.Width = 506;
         newTextBox4.Height = 76;
-        newTextBox4.Name = $"textbox3_{boxCount++}";
+        newTextBox4.Name = $"textbox4_{boxCount++}";
         newTextBox4.Text = "EX:C:\\Users\\samlo\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Steam.exe";
         newTextBox4.Location = new Point(107, 90);
 
@@ -81,6 +92,14 @@ public partial class Form1 : Form
         container.Controls.Add(saveButton);
         container.Controls.Add(editButton);
 
+        var userData = new UserData
+        {
+            Blockset = textBox1.Text,
+            Time = textBox2.Text,
+            Days = textBox3.Text,
+            Paths = textBox3.Text,
+        };
+        container.Tag = userData;
     }
 
     private void SaveButton_Clicked(object sender, EventArgs e)
@@ -97,21 +116,41 @@ public partial class Form1 : Form
         {
             return;
         }
-
+        UserData userData = container.Tag as UserData;
         foreach (Control ctrl in container.Controls)
         {
-            if (ctrl is TextBox tb)
-            {
-                tb.Enabled = false;
-            }
-            else if (ctrl is Button btn)
-            {
-                if (btn.Name == "EditButton")
+                if (ctrl is TextBox tb)
                 {
-                    btn.Visible = true;
+                    tb.Enabled = false;
+                    if (tb.Name.StartsWith("textbox1_"))
+                    {
+                        userData.Blockset = tb.Text;
+                    }
+                    else if (tb.Name.StartsWith("textbox2_"))
+                    {
+                        userData.Time = tb.Text;
+                    }
+                else if (tb.Name.StartsWith("textbox3_"))
+                    {
+                        userData.Days = tb.Text;
+                    }
+                    else if (tb.Name.StartsWith("textbox4_"))
+                    {
+                        userData.Paths = tb.Text;
+                    }
                 }
-            }
+                else if (ctrl is Button btn)
+                {
+                    if (btn.Name == "EditButton")
+                    {
+                       btn.Visible = true;
+                    }
+                }
         }
+        
+        string jsonString = JsonSerializer.Serialize(userData, new JsonSerializerOptions { WriteIndented = true});
+        MessageBox.Show(jsonString, "Data");
+
     }
     private void EditButton_Clicked(object sender, EventArgs args)
     {
