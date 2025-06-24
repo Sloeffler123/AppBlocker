@@ -10,7 +10,7 @@ public partial class Form1 : Form
     }
     private void AddButton_Click(object sender, EventArgs e)
     {
-        
+        // if containter not filled out and is greater than 1 pass
         Panel container = new Panel();
         container.Width = 736;
         container.Height = 169;
@@ -60,6 +60,7 @@ public partial class Form1 : Form
         saveButton.Location = new Point(640, 3);
         saveButton.Width = 75;
         saveButton.Height = 23;
+        saveButton.Click += SaveButton_Clicked;
 
         // edit button
         Button editButton = new Button();
@@ -69,6 +70,7 @@ public partial class Form1 : Form
         editButton.Width = 75;
         editButton.Height = 23;
         editButton.Visible = false;
+        editButton.Click += EditButton_Clicked;
 
         flowLayoutPanel1.Controls.Add(container);
 
@@ -81,4 +83,63 @@ public partial class Form1 : Form
 
     }
 
+    private void SaveButton_Clicked(object sender, EventArgs e)
+    {
+        Button saveButton = sender as Button;
+
+        if (saveButton == null)
+        {
+            return;
+        }
+        Panel container = saveButton.Parent as Panel;
+
+        if (container == null)
+        {
+            return;
+        }
+
+        foreach (Control ctrl in container.Controls)
+        {
+            if (ctrl is TextBox tb)
+            {
+                tb.Enabled = false;
+            }
+            else if (ctrl is Button btn)
+            {
+                if (btn.Name == "EditButton")
+                {
+                    btn.Visible = true;
+                }
+            }
+        }
+    }
+    private void EditButton_Clicked(object sender, EventArgs args)
+    {
+        Button editButton = sender as Button;
+
+        if (editButton == null)
+        {
+            return;
+        }
+        Panel container = editButton.Parent as Panel;
+
+        if (container == null)
+        {
+            return;
+        }
+        foreach (Control ctrl in container.Controls)
+        {
+            if (ctrl is TextBox tb)
+            {
+                tb.Enabled = true;
+            }
+            else if (ctrl is Button btn)
+            {
+                if (btn.Name == "EditButton")
+                {
+                    btn.Visible = false;
+                }
+            }
+        }
+    }
 }
