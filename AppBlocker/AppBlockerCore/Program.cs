@@ -1,5 +1,7 @@
 ﻿
 using AppBlockerRunApplication;
+using System.Runtime.ExceptionServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AppBlockerAddFilesToList
 {
@@ -18,12 +20,61 @@ namespace AppBlockerAddFilesToList
         }
 
         // check if file exists and add the path to a list
-        public static void CheckIfFileOrDirectory(string path)
+        public static bool CheckIfFileOrDirectory(string path)
         {
             if (File.Exists(path))
             {
                 AddFile(path);
+                return true;
             }
+            else if (Directory.Exists(path))
+            {
+                DirectoryFilesToBlock(path);
+                return true;
+            }
+            return false;
+        }
+        public static bool CheckCorrectDaysFormat(string days)
+        {
+            string[] allDays = new string[] { 
+                "monday", 
+                "tuesday", 
+                "wednesday", 
+                "thursday", 
+                "friday", 
+                "saturday", 
+                "sunday", 
+            };
+
+            
+            string firstPart = "";
+            string secondPart = "";
+            bool triggered = false;
+            foreach (var s in days)
+            {
+                if (s == '-')
+                {
+                    triggered = true;
+                    continue;
+                }
+                if (triggered)
+                {
+                    secondPart += s;
+                }
+                else
+                {
+                    firstPart += s;
+                }
+            }
+            if (!allDays.Contains(firstPart.ToLower()) || !allDays.Contains(secondPart.ToLower()))
+            {
+                return false;
+            }
+            if (Array.IndexOf(allDays, firstPart.ToLower()) >= Array.IndexOf(allDays, secondPart.ToLower()))
+            {
+                return false;
+            }
+            return true;
         }
         public static void AddFile(string path)
         {
@@ -53,46 +104,45 @@ namespace AppBlockerAddFilesToList
                 Console.WriteLine($"{path} could not be found. Please double check spelling");
             }
         }
-        
-        // time frame to block
-        public static bool TryGetValidTimeFrame(string input)
-        {
-            if (input == "1")
-            {
-                return false;
-            }
-            if (CheckIfTimeFrameValid(input))
-            {
-                timeFrameToBlock = input;
-                return true;
-            }
-            return false;
-        }
 
         // check if time frame given is valid (Helper method)
         public static bool CheckIfTimeFrameValid(string timeFrame)
         {
-            if (timeFrame.Length < 9 || timeFrame.Length > 9)
+            List<string> times = new();
+            var firstPart = "";
+            var secondPart = "";
+            bool triggered = false;
+            foreach (var time in timeFrame)
             {
-                return false;
-            }
-            foreach (var num in timeFrame)
-            {
-                int newNum = (int)char.GetNumericValue(num);
-                if (num == '-')
+                if (time == '-')
                 {
+                    triggered = true;
                     continue;
                 }
-                else if (newNum <= 9 && newNum >= 0)
+                else if (triggered)
                 {
-                    continue;
+                    secondPart += time;
                 }
                 else
                 {
-                    return false;
+                    firstPart += time;
                 }
             }
-            return true;
+            var first = DateTime.TryParseExact(
+                firstPart,
+                "HH:mm",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out _
+            );
+            var second = DateTime.TryParseExact(
+                secondPart,
+                "HH:mm",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out _
+            );
+            return second && first;
         }
         // display random words for the user to unlock
         public static List<string> DisplayRandomWords()
