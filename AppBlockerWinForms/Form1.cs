@@ -1,5 +1,7 @@
+using AppBlockerAddFilesToList;
 using System.Diagnostics;
 using System.Text.Json;
+using static AppBlockerWinForms.Form1;
 
 namespace AppBlockerWinForms;
 
@@ -44,7 +46,7 @@ public partial class Form1 : Form
         newTextBox2.Width = 506;
         newTextBox2.Height = 23;
         newTextBox2.Name = $"textbox2_{boxCount++}";
-        newTextBox2.Text = "0600-1400";
+        newTextBox2.Text = "06:00-14:00";
         newTextBox2.Location = new Point(107, 32);
 
         // text for the days to apply this block to
@@ -53,7 +55,7 @@ public partial class Form1 : Form
         newTextBox3.Width = 506;
         newTextBox3.Height = 23;
         newTextBox3.Name = $"textbox3_{boxCount++}";
-        newTextBox3.Text = "Days (EX: Monday-Wednesday)";
+        newTextBox3.Text = "Monday-Wednesday";
         newTextBox3.Location = new Point(107, 61);
 
         // text for the path of app
@@ -123,63 +125,87 @@ public partial class Form1 : Form
         {
             if (ctrl is TextBox tb && tb.Text.Length > 0)
             {
-                tb.Enabled = false;
-                if (tb.Name.StartsWith("textbox1_"))
-                {
-                    userData.Blockset = tb.Text;
-                    textBoxes.Add(tb);
-                }
-                else if (tb.Name.StartsWith("textbox2_"))
-                {
-                    userData.Time = tb.Text;
-                    textBoxes.Add(tb);
-                }
-                else if (tb.Name.StartsWith("textbox3_"))
-                {
-                    userData.Days = tb.Text;
-                    textBoxes.Add(tb);
-                }
-                else if (tb.Name.StartsWith("textbox4_"))
-                {
-                    userData.Paths = tb.Text;
-                    textBoxes.Add(tb);
-                }
-                    
+                HandleTextBox(tb, userData, textBoxes);
             }
-            else if (ctrl is Button btn)
+            else if (ctrl is Button btn && btn.Name == "EditButton")
             {
-                    if (btn.Name == "EditButton")
-                    {
-                        btn.Visible = true;
-                    }
-                    
+                btn.Visible = true;
+            }
+        }
+        MakeJsonFile(userData, textBoxes);
+    }
+    private void HandleTextBox(TextBox tb, UserData userData, List<TextBox> textBoxesList)
+    {
+        bool isValid = false;
+
+        if (tb.Name.StartsWith("textbox1_"))
+        {
+             userData.Blockset = tb.Text.Trim();
+             isValid = true;
+                
+        }  
+        else if (tb.Name.StartsWith("textbox2_"))
+        {
+            isValid = Files.CheckIfTimeFrameValid(tb.Text);
+            if (isValid)
+            {
+              userData.Time = tb.Text.Trim();    
             }
             else
             {
-              MessageBox.Show("Cant save null data");
+                MessageBox.Show("Not correct format (EX: 06:00-14:00)");
             }
         }
-        if (CheckIfTextIsEmpty(textBoxes))
+        else if (tb.Name.StartsWith("textbox3_"))
         {
-            string jsonString = JsonSerializer.Serialize(userData, new JsonSerializerOptions { WriteIndented = true });
+            isValid = Files.CheckCorrectDaysFormat(tb.Text);
+            if (isValid)
+            {
+               userData.Days = tb.Text.Trim();
+            }
+            else
+            {
+                MessageBox.Show("Not correct format");
+            }
+        }
+        else if (tb.Name.StartsWith("textbox4_"))
+        {
+            isValid = Files.CheckIfFileOrDirectory(tb.Text);
+            if (isValid)
+            {
+              userData.Paths = tb.Text.Trim();
+            }
+            else
+            {
+              MessageBox.Show("Not a valid path");
+            }
+        }
+        if (isValid)
+        {
+                tb.Enabled = false;
+                textBoxesList.Add(tb);
+        }
+    }
+    private void MakeJsonFile(UserData data, List<TextBox> textsList)
+    {
+        if (CheckIfTextIsEmpty(textsList))
+        {
+            string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             MessageBox.Show(jsonString, "Data");
             File.WriteAllText($"user{userID++}_data.json", jsonString);
-        }
-        else
-        {
-            Console.WriteLine("Please enter a valid input");
         }
     }
     private bool CheckIfTextIsEmpty(List<TextBox> textBoxesList)
     {
+        int count = 0;
         foreach (var textBox in textBoxesList)
         {
-            if (textBox.Text.Length == 0 || textBoxesList.Count != 4)
+            if (textBox.Text.Length != 0 && textBoxesList.Count == 4)
             {
-                return false;
+                count += 1;
             }
         }
-        return true;
+        return count == 4;
     }
     private void EditButton_Clicked(object sender, EventArgs args)
     {
