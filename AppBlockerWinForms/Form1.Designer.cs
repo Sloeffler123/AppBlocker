@@ -29,27 +29,8 @@ partial class Form1
     private void InitializeComponent()
     {
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-        Calender = new TabPage();
-        tableLayoutPanel1 = new TableLayoutPanel();
-        textBox9 = new TextBox();
-        textBox8 = new TextBox();
-        textBox7 = new TextBox();
-        textBox6 = new TextBox();
-        textBox5 = new TextBox();
-        textBox4 = new TextBox();
-        textBox1 = new TextBox();
-        textBox10 = new TextBox();
-        tableLayoutPanel2 = new TableLayoutPanel();
-        Dashboard = new TabPage();
-        flowLayoutPanel1 = new FlowLayoutPanel();
-        AddButton = new Button();
-        ActiveBlocks = new Label();
-        Tabs = new TabControl();
-        Help = new TabPage();
-        textBox3 = new TextBox();
-        textBox2 = new TextBox();
-        label2 = new Label();
-        label1 = new Label();
+        backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+        fileSystemWatcher1 = new FileSystemWatcher();
         tabPage1 = new TabPage();
         panel1 = new Panel();
         tableLayoutPanel3 = new TableLayoutPanel();
@@ -85,279 +66,34 @@ partial class Form1
         textBox40 = new TextBox();
         textBox41 = new TextBox();
         textBox42 = new TextBox();
-        textBox28 = new TextBox();
         textBox43 = new TextBox();
-        backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-        fileSystemWatcher1 = new FileSystemWatcher();
-        Calender.SuspendLayout();
-        tableLayoutPanel1.SuspendLayout();
-        Dashboard.SuspendLayout();
-        Tabs.SuspendLayout();
-        Help.SuspendLayout();
+        textBox28 = new TextBox();
+        Help = new TabPage();
+        textBox3 = new TextBox();
+        textBox2 = new TextBox();
+        label2 = new Label();
+        label1 = new Label();
+        Dashboard = new TabPage();
+        flowLayoutPanel1 = new FlowLayoutPanel();
+        AddButton = new Button();
+        ActiveBlocks = new Label();
+        Tabs = new TabControl();
+        button1 = new Button();
+        button2 = new Button();
+        ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
         tabPage1.SuspendLayout();
         panel1.SuspendLayout();
         tableLayoutPanel3.SuspendLayout();
         tableLayoutPanel4.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
+        Help.SuspendLayout();
+        Dashboard.SuspendLayout();
+        Tabs.SuspendLayout();
         SuspendLayout();
         // 
-        // Calender
+        // fileSystemWatcher1
         // 
-        Calender.Controls.Add(tableLayoutPanel1);
-        Calender.Location = new Point(4, 24);
-        Calender.Name = "Calender";
-        Calender.Size = new Size(1063, 443);
-        Calender.TabIndex = 2;
-        Calender.Text = "Calender";
-        Calender.UseVisualStyleBackColor = true;
-        // 
-        // tableLayoutPanel1
-        // 
-        tableLayoutPanel1.AutoScroll = true;
-        tableLayoutPanel1.ColumnCount = 8;
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6.644471F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.4302549F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.5696955F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.1953573F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.2889423F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.2404938F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.23209F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.398694F));
-        tableLayoutPanel1.Controls.Add(textBox9, 7, 0);
-        tableLayoutPanel1.Controls.Add(textBox8, 6, 0);
-        tableLayoutPanel1.Controls.Add(textBox7, 5, 0);
-        tableLayoutPanel1.Controls.Add(textBox6, 4, 0);
-        tableLayoutPanel1.Controls.Add(textBox5, 3, 0);
-        tableLayoutPanel1.Controls.Add(textBox4, 2, 0);
-        tableLayoutPanel1.Controls.Add(textBox1, 1, 0);
-        tableLayoutPanel1.Controls.Add(textBox10, 0, 0);
-        tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
-        tableLayoutPanel1.Location = new Point(3, 4);
-        tableLayoutPanel1.Name = "tableLayoutPanel1";
-        tableLayoutPanel1.RowCount = 2;
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 6.41025639F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 93.5897446F));
-        tableLayoutPanel1.Size = new Size(1049, 436);
-        tableLayoutPanel1.TabIndex = 0;
-        // 
-        // textBox9
-        // 
-        textBox9.Location = new Point(907, 3);
-        textBox9.Multiline = true;
-        textBox9.Name = "textBox9";
-        textBox9.Size = new Size(139, 21);
-        textBox9.TabIndex = 6;
-        textBox9.Text = "Saturday";
-        textBox9.TextAlign = HorizontalAlignment.Center;
-        // 
-        // textBox8
-        // 
-        textBox8.Location = new Point(769, 3);
-        textBox8.Multiline = true;
-        textBox8.Name = "textBox8";
-        textBox8.Size = new Size(132, 21);
-        textBox8.TabIndex = 5;
-        textBox8.Text = "Friday";
-        textBox8.TextAlign = HorizontalAlignment.Center;
-        // 
-        // textBox7
-        // 
-        textBox7.Location = new Point(631, 3);
-        textBox7.Multiline = true;
-        textBox7.Name = "textBox7";
-        textBox7.Size = new Size(132, 21);
-        textBox7.TabIndex = 4;
-        textBox7.Text = "Thursday";
-        textBox7.TextAlign = HorizontalAlignment.Center;
-        // 
-        // textBox6
-        // 
-        textBox6.Location = new Point(492, 3);
-        textBox6.Multiline = true;
-        textBox6.Name = "textBox6";
-        textBox6.Size = new Size(133, 21);
-        textBox6.TabIndex = 3;
-        textBox6.Text = "Wednesday";
-        textBox6.TextAlign = HorizontalAlignment.Center;
-        // 
-        // textBox5
-        // 
-        textBox5.Location = new Point(354, 3);
-        textBox5.Multiline = true;
-        textBox5.Name = "textBox5";
-        textBox5.Size = new Size(132, 21);
-        textBox5.TabIndex = 2;
-        textBox5.Text = "Tuesday";
-        textBox5.TextAlign = HorizontalAlignment.Center;
-        // 
-        // textBox4
-        // 
-        textBox4.Location = new Point(212, 3);
-        textBox4.Multiline = true;
-        textBox4.Name = "textBox4";
-        textBox4.Size = new Size(135, 21);
-        textBox4.TabIndex = 1;
-        textBox4.Text = "Monday";
-        textBox4.TextAlign = HorizontalAlignment.Center;
-        // 
-        // textBox1
-        // 
-        textBox1.Location = new Point(72, 3);
-        textBox1.Multiline = true;
-        textBox1.Name = "textBox1";
-        textBox1.Size = new Size(134, 21);
-        textBox1.TabIndex = 0;
-        textBox1.Text = "Sunday";
-        textBox1.TextAlign = HorizontalAlignment.Center;
-        // 
-        // textBox10
-        // 
-        textBox10.Location = new Point(3, 3);
-        textBox10.Name = "textBox10";
-        textBox10.Size = new Size(63, 23);
-        textBox10.TabIndex = 7;
-        textBox10.Text = "Times";
-        textBox10.TextAlign = HorizontalAlignment.Center;
-        // 
-        // tableLayoutPanel2
-        // 
-        tableLayoutPanel2.AutoScroll = true;
-        tableLayoutPanel2.ColumnCount = 1;
-        tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        tableLayoutPanel2.Location = new Point(3, 30);
-        tableLayoutPanel2.Name = "tableLayoutPanel2";
-        tableLayoutPanel2.RowCount = 24;
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.132611F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 3.68983126F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.67357349F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.67357349F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13261127F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.77248764F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 4.13303041F));
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 3.67048883F));
-        tableLayoutPanel2.Size = new Size(63, 393);
-        tableLayoutPanel2.TabIndex = 8;
-        // 
-        // Dashboard
-        // 
-        Dashboard.Controls.Add(flowLayoutPanel1);
-        Dashboard.Controls.Add(AddButton);
-        Dashboard.Controls.Add(ActiveBlocks);
-        Dashboard.Location = new Point(4, 24);
-        Dashboard.Name = "Dashboard";
-        Dashboard.Padding = new Padding(3);
-        Dashboard.Size = new Size(1063, 443);
-        Dashboard.TabIndex = 0;
-        Dashboard.Text = "Blocks";
-        Dashboard.UseVisualStyleBackColor = true;
-        // 
-        // flowLayoutPanel1
-        // 
-        flowLayoutPanel1.AutoScroll = true;
-        flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
-        flowLayoutPanel1.Location = new Point(6, 55);
-        flowLayoutPanel1.Name = "flowLayoutPanel1";
-        flowLayoutPanel1.Size = new Size(739, 382);
-        flowLayoutPanel1.TabIndex = 5;
-        flowLayoutPanel1.WrapContents = false;
-        // 
-        // AddButton
-        // 
-        AddButton.Location = new Point(751, 55);
-        AddButton.Name = "AddButton";
-        AddButton.Size = new Size(75, 23);
-        AddButton.TabIndex = 3;
-        AddButton.Text = "Add";
-        AddButton.UseVisualStyleBackColor = true;
-        AddButton.Click += AddButton_Click;
-        // 
-        // ActiveBlocks
-        // 
-        ActiveBlocks.AutoSize = true;
-        ActiveBlocks.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-        ActiveBlocks.Location = new Point(267, 12);
-        ActiveBlocks.Name = "ActiveBlocks";
-        ActiveBlocks.Size = new Size(198, 40);
-        ActiveBlocks.TabIndex = 0;
-        ActiveBlocks.Text = "Active Blocks";
-        // 
-        // Tabs
-        // 
-        Tabs.Controls.Add(Dashboard);
-        Tabs.Controls.Add(Calender);
-        Tabs.Controls.Add(Help);
-        Tabs.Controls.Add(tabPage1);
-        Tabs.Location = new Point(92, 12);
-        Tabs.Name = "Tabs";
-        Tabs.SelectedIndex = 0;
-        Tabs.Size = new Size(1071, 471);
-        Tabs.TabIndex = 3;
-        // 
-        // Help
-        // 
-        Help.Controls.Add(textBox3);
-        Help.Controls.Add(textBox2);
-        Help.Controls.Add(label2);
-        Help.Controls.Add(label1);
-        Help.Location = new Point(4, 24);
-        Help.Name = "Help";
-        Help.Size = new Size(1063, 443);
-        Help.TabIndex = 3;
-        Help.Text = "Help";
-        Help.UseVisualStyleBackColor = true;
-        // 
-        // textBox3
-        // 
-        textBox3.Location = new Point(407, 37);
-        textBox3.Multiline = true;
-        textBox3.Name = "textBox3";
-        textBox3.Size = new Size(212, 306);
-        textBox3.TabIndex = 3;
-        // 
-        // textBox2
-        // 
-        textBox2.Location = new Point(3, 37);
-        textBox2.Multiline = true;
-        textBox2.Name = "textBox2";
-        textBox2.Size = new Size(198, 138);
-        textBox2.TabIndex = 2;
-        textBox2.Text = resources.GetString("textBox2.Text");
-        // 
-        // label2
-        // 
-        label2.AutoSize = true;
-        label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        label2.Location = new Point(407, 13);
-        label2.Name = "label2";
-        label2.Size = new Size(145, 21);
-        label2.TabIndex = 1;
-        label2.Text = "Recommended Use";
-        // 
-        // label1
-        // 
-        label1.AutoSize = true;
-        label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        label1.Location = new Point(17, 13);
-        label1.Name = "label1";
-        label1.Size = new Size(91, 21);
-        label1.TabIndex = 0;
-        label1.Text = "How To Use";
+        fileSystemWatcher1.EnableRaisingEvents = true;
+        fileSystemWatcher1.SynchronizingObject = this;
         // 
         // tabPage1
         // 
@@ -367,7 +103,7 @@ partial class Form1
         tabPage1.Padding = new Padding(3);
         tabPage1.Size = new Size(1063, 443);
         tabPage1.TabIndex = 4;
-        tabPage1.Text = "tabPage1";
+        tabPage1.Text = "Calendar";
         tabPage1.UseVisualStyleBackColor = true;
         // 
         // panel1
@@ -524,8 +260,8 @@ partial class Form1
         tableLayoutPanel4.Controls.Add(textBox40, 0, 21);
         tableLayoutPanel4.Controls.Add(textBox41, 0, 22);
         tableLayoutPanel4.Controls.Add(textBox42, 0, 23);
-        tableLayoutPanel4.Controls.Add(textBox28, 0, 9);
         tableLayoutPanel4.Controls.Add(textBox43, 0, 24);
+        tableLayoutPanel4.Controls.Add(textBox28, 0, 9);
         tableLayoutPanel4.Location = new Point(3, 30);
         tableLayoutPanel4.Name = "tableLayoutPanel4";
         tableLayoutPanel4.RowCount = 25;
@@ -538,8 +274,8 @@ partial class Form1
         tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 4.155496F));
         tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 4.02144766F));
         tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 3.88739944F));
-        tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 4.42359257F));
-        tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 3.75335121F));
+        tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 4.02144766F));
+        tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 4.155496F));
         tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 4.02144766F));
         tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 3.88739944F));
         tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 4.155496F));
@@ -641,7 +377,7 @@ partial class Form1
         // textBox29
         // 
         textBox29.Enabled = false;
-        textBox29.Location = new Point(3, 312);
+        textBox29.Location = new Point(3, 309);
         textBox29.Name = "textBox29";
         textBox29.Size = new Size(57, 23);
         textBox29.TabIndex = 10;
@@ -764,15 +500,6 @@ partial class Form1
         textBox42.TabIndex = 23;
         textBox42.Text = "23:00";
         // 
-        // textBox28
-        // 
-        textBox28.Enabled = false;
-        textBox28.Location = new Point(3, 279);
-        textBox28.Name = "textBox28";
-        textBox28.Size = new Size(57, 23);
-        textBox28.TabIndex = 9;
-        textBox28.Text = "09:00";
-        // 
         // textBox43
         // 
         textBox43.Enabled = false;
@@ -782,61 +509,177 @@ partial class Form1
         textBox43.TabIndex = 24;
         textBox43.Text = "24:00";
         // 
-        // fileSystemWatcher1
+        // textBox28
         // 
-        fileSystemWatcher1.EnableRaisingEvents = true;
-        fileSystemWatcher1.SynchronizingObject = this;
+        textBox28.Enabled = false;
+        textBox28.Location = new Point(3, 279);
+        textBox28.Name = "textBox28";
+        textBox28.Size = new Size(57, 23);
+        textBox28.TabIndex = 9;
+        textBox28.Text = "09:00";
+        // 
+        // Help
+        // 
+        Help.Controls.Add(textBox3);
+        Help.Controls.Add(textBox2);
+        Help.Controls.Add(label2);
+        Help.Controls.Add(label1);
+        Help.Location = new Point(4, 24);
+        Help.Name = "Help";
+        Help.Size = new Size(1063, 443);
+        Help.TabIndex = 3;
+        Help.Text = "Help";
+        Help.UseVisualStyleBackColor = true;
+        // 
+        // textBox3
+        // 
+        textBox3.Location = new Point(407, 37);
+        textBox3.Multiline = true;
+        textBox3.Name = "textBox3";
+        textBox3.Size = new Size(212, 306);
+        textBox3.TabIndex = 3;
+        // 
+        // textBox2
+        // 
+        textBox2.Location = new Point(3, 37);
+        textBox2.Multiline = true;
+        textBox2.Name = "textBox2";
+        textBox2.Size = new Size(198, 138);
+        textBox2.TabIndex = 2;
+        textBox2.Text = resources.GetString("textBox2.Text");
+        // 
+        // label2
+        // 
+        label2.AutoSize = true;
+        label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        label2.Location = new Point(407, 13);
+        label2.Name = "label2";
+        label2.Size = new Size(145, 21);
+        label2.TabIndex = 1;
+        label2.Text = "Recommended Use";
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        label1.Location = new Point(17, 13);
+        label1.Name = "label1";
+        label1.Size = new Size(91, 21);
+        label1.TabIndex = 0;
+        label1.Text = "How To Use";
+        // 
+        // Dashboard
+        // 
+        Dashboard.Controls.Add(flowLayoutPanel1);
+        Dashboard.Controls.Add(AddButton);
+        Dashboard.Controls.Add(ActiveBlocks);
+        Dashboard.Location = new Point(4, 24);
+        Dashboard.Name = "Dashboard";
+        Dashboard.Padding = new Padding(3);
+        Dashboard.Size = new Size(1063, 443);
+        Dashboard.TabIndex = 0;
+        Dashboard.Text = "Blocks";
+        Dashboard.UseVisualStyleBackColor = true;
+        // 
+        // flowLayoutPanel1
+        // 
+        flowLayoutPanel1.AutoScroll = true;
+        flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
+        flowLayoutPanel1.Location = new Point(6, 55);
+        flowLayoutPanel1.Name = "flowLayoutPanel1";
+        flowLayoutPanel1.Size = new Size(739, 382);
+        flowLayoutPanel1.TabIndex = 5;
+        flowLayoutPanel1.WrapContents = false;
+        // 
+        // AddButton
+        // 
+        AddButton.Location = new Point(751, 55);
+        AddButton.Name = "AddButton";
+        AddButton.Size = new Size(75, 23);
+        AddButton.TabIndex = 3;
+        AddButton.Text = "Add";
+        AddButton.UseVisualStyleBackColor = true;
+        AddButton.Click += AddButton_Click;
+        // 
+        // ActiveBlocks
+        // 
+        ActiveBlocks.AutoSize = true;
+        ActiveBlocks.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+        ActiveBlocks.Location = new Point(267, 12);
+        ActiveBlocks.Name = "ActiveBlocks";
+        ActiveBlocks.Size = new Size(198, 40);
+        ActiveBlocks.TabIndex = 0;
+        ActiveBlocks.Text = "Active Blocks";
+        // 
+        // Tabs
+        // 
+        Tabs.Controls.Add(Dashboard);
+        Tabs.Controls.Add(Help);
+        Tabs.Controls.Add(tabPage1);
+        Tabs.Location = new Point(92, 12);
+        Tabs.Name = "Tabs";
+        Tabs.SelectedIndex = 0;
+        Tabs.Size = new Size(1071, 471);
+        Tabs.TabIndex = 3;
+        // 
+        // button1
+        // 
+        button1.Location = new Point(470, 511);
+        button1.Name = "button1";
+        button1.Size = new Size(75, 23);
+        button1.TabIndex = 4;
+        button1.Text = "button1";
+        button1.UseVisualStyleBackColor = true;
+        button1.Click += button1_Click;
+        // 
+        // button2
+        // 
+        button2.Location = new Point(610, 511);
+        button2.Name = "button2";
+        button2.Size = new Size(75, 23);
+        button2.TabIndex = 5;
+        button2.Text = "button2";
+        button2.UseVisualStyleBackColor = true;
+        button2.Click += button2_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1163, 591);
+        Controls.Add(button2);
+        Controls.Add(button1);
         Controls.Add(Tabs);
         Name = "Form1";
         Text = "Form1";
-        Calender.ResumeLayout(false);
-        tableLayoutPanel1.ResumeLayout(false);
-        tableLayoutPanel1.PerformLayout();
-        Dashboard.ResumeLayout(false);
-        Dashboard.PerformLayout();
-        Tabs.ResumeLayout(false);
-        Help.ResumeLayout(false);
-        Help.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
         tabPage1.ResumeLayout(false);
         panel1.ResumeLayout(false);
         tableLayoutPanel3.ResumeLayout(false);
         tableLayoutPanel3.PerformLayout();
         tableLayoutPanel4.ResumeLayout(false);
         tableLayoutPanel4.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
+        Help.ResumeLayout(false);
+        Help.PerformLayout();
+        Dashboard.ResumeLayout(false);
+        Dashboard.PerformLayout();
+        Tabs.ResumeLayout(false);
         ResumeLayout(false);
     }
 
     #endregion
-    private TabPage Calender;
-    private TabPage Dashboard;
+    private System.ComponentModel.BackgroundWorker backgroundWorker1;
+    private FileSystemWatcher fileSystemWatcher1;
     private TabControl Tabs;
-    private Label ActiveBlocks;
+    private TabPage Dashboard;
+    private FlowLayoutPanel flowLayoutPanel1;
     private Button AddButton;
+    private Label ActiveBlocks;
     private TabPage Help;
     private TextBox textBox3;
     private TextBox textBox2;
     private Label label2;
     private Label label1;
-    private FlowLayoutPanel flowLayoutPanel1;
-    private System.ComponentModel.BackgroundWorker backgroundWorker1;
-    private FileSystemWatcher fileSystemWatcher1;
-    private TableLayoutPanel tableLayoutPanel1;
-    private TextBox textBox9;
-    private TextBox textBox8;
-    private TextBox textBox7;
-    private TextBox textBox6;
-    private TextBox textBox5;
-    private TextBox textBox4;
-    private TextBox textBox1;
-    private TextBox textBox10;
-    private TableLayoutPanel tableLayoutPanel2;
     private TabPage tabPage1;
     private Panel panel1;
     private TableLayoutPanel tableLayoutPanel3;
@@ -858,7 +701,6 @@ partial class Form1
     private TextBox textBox25;
     private TextBox textBox26;
     private TextBox textBox27;
-    private TextBox textBox28;
     private TextBox textBox29;
     private TextBox textBox30;
     private TextBox textBox31;
@@ -873,5 +715,8 @@ partial class Form1
     private TextBox textBox40;
     private TextBox textBox41;
     private TextBox textBox42;
+    private TextBox textBox28;
     private TextBox textBox43;
+    private Button button1;
+    private Button button2;
 }

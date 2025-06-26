@@ -1,29 +1,34 @@
 
 using System.Diagnostics;
 using System;
+using System.Text.Json;
 namespace AppBlockerRunApplication
 {
     public static class RunApplication
     {
-        public static void DetectIfFilesAreRunning()
+        public static void DetectIfFilesAreRunning(string fileName)
         {
+            // get current time and convert to military time
             DateTime currentTime = DateTime.Now;
-            var convertTimeToMilitary = currentTime.ToString("HHmm");
-            List<string> paths = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\AppBlockerClean\AppBlocker\AppBlockerCore\user_files_to_block.txt").Select(p => p.Trim().ToLower()).ToList();
+            var convertTimeToMilitary = currentTime.ToString("HH:mm");
+            // get the json data
+            string json = File.ReadAllText(fileName);
+            using JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement root = doc.RootElement;
+
+            // get paths from the json
+            string[] paths = JsonSerializer.Deserialize<string[]>(root.GetProperty("Paths"));
+            // get time from json
+            string time = root.GetProperty("Time").GetString();
+            // get days from json
+            string days = root.GetProperty("Days").GetString();
+            // get block set name
+            string blockName = root.GetProperty("Blockset").GetString();
+
             var targetPaths = FindEndOfPath(paths);
-            var time = File.ReadAllLines(@"C:\Users\samlo\OneDrive\Desktop\AppBlockerClean\AppBlocker\AppBlockerCore\time_frame_to_block.txt");
+            
             (string firstTime, string secondTime) = BreakUpTimes(time);
-            var newFirstTime = 0;
-            try
-            {
-                newFirstTime = int.Parse(firstTime);
-            }
-            catch (System.FormatException)
-            {
-                System.Environment.Exit(0);
-            }
-            var newSecondTime = int.Parse(secondTime);
-            var newMilitaryTime = int.Parse(convertTimeToMilitary);
+            
             bool on = true;
             while (on)
             {
@@ -32,12 +37,12 @@ namespace AppBlockerRunApplication
                     foreach (var process in Process.GetProcessesByName(path))
                     {
 
-                        if (newMilitaryTime > newFirstTime)
+                        if (CompareCurrentTimeToBlockTime(time, convertTimeToMilitary))
                         {
                             process.Kill();
                             process.WaitForExit();
                         }
-                        else if (newSecondTime > newMilitaryTime)
+                        else
                         {
                             on = false;
                             break;
@@ -47,7 +52,12 @@ namespace AppBlockerRunApplication
             }   
         }
 
-        public static List<string> FindEndOfPath(List<string> paths)
+        public static bool CompareCurrentTimeToBlockTime(string userTime, string currentMilitaryTime)
+        {
+            var splitUserTime = userTime.Split("-");
+            return (int.Parse(currentMilitaryTime.Replace(":", "")) > int.Parse(splitUserTime[0].Replace(":", "")));
+        }
+        public static List<string> FindEndOfPath(string[] paths)
         {
             List<string> finalPaths = new();
             foreach (var path in paths)
@@ -68,33 +78,6 @@ namespace AppBlockerRunApplication
                 }
             }
             return finalPaths;
-        }
-
-        public static (string, string) BreakUpTimes(string[] times)
-        {
-            string firstTime = "";
-            string secondTime = "";
-            bool holder = false;
-            foreach (var time in times)
-            {
-                foreach (var num in time)
-                {
-                    if (num == '-')
-                    {
-                        holder = true;
-                        continue;
-                    }
-                    if (holder)
-                    {
-                        secondTime += num;
-                    }
-                    else
-                    {
-                        firstTime += num;
-                    }
-                }
-            }
-            return (firstTime, secondTime);
         }
     }
 }

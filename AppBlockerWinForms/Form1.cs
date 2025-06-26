@@ -1,6 +1,7 @@
 using AppBlockerAddFilesToList;
 using System.Diagnostics;
 using System.Text.Json;
+using AppBlockerCalendarWinForms;
 using static AppBlockerWinForms.Form1;
 
 namespace AppBlockerWinForms;
@@ -19,11 +20,10 @@ public partial class Form1 : Form
         public string Blockset { get; set; }
         public string Time { get; set; }
         public string Days { get; set; }
-        public string Paths { get; set; }
+        public string[] Paths { get; set; }
     }
     private void AddButton_Click(object sender, EventArgs e)
     {
-        
         // if containter not filled out and is greater than 1 pass
         Panel container = new Panel();
         container.Width = 736;
@@ -97,10 +97,10 @@ public partial class Form1 : Form
 
         var userData = new UserData
         {
-            Blockset = textBox1.Text,
-            Time = textBox2.Text,
-            Days = textBox3.Text,
-            Paths = textBox3.Text,
+            Blockset = newTextBox1.Text,
+            Time = newTextBox2.Text,
+            Days = newTextBox3.Text,
+            Paths = null,
         };
         container.Tag = userData;
     }
@@ -140,16 +140,15 @@ public partial class Form1 : Form
 
         if (tb.Name.StartsWith("textbox1_"))
         {
-             userData.Blockset = tb.Text.Trim();
-             isValid = true;
-                
-        }  
+            userData.Blockset = tb.Text.Trim();
+            isValid = true;
+        }
         else if (tb.Name.StartsWith("textbox2_"))
         {
             isValid = Files.CheckIfTimeFrameValid(tb.Text);
             if (isValid)
             {
-              userData.Time = tb.Text.Trim();    
+                userData.Time = tb.Text.Trim();
             }
             else
             {
@@ -161,7 +160,7 @@ public partial class Form1 : Form
             isValid = Files.CheckCorrectDaysFormat(tb.Text);
             if (isValid)
             {
-               userData.Days = tb.Text.Trim();
+                userData.Days = tb.Text.Trim();
             }
             else
             {
@@ -170,20 +169,21 @@ public partial class Form1 : Form
         }
         else if (tb.Name.StartsWith("textbox4_"))
         {
-            isValid = Files.CheckIfFileOrDirectory(tb.Text);
+            isValid = Files.CheckIfFileOrDirectory(tb.Text.Split());
             if (isValid)
             {
-              userData.Paths = tb.Text.Trim();
+                var newUserData = tb.Text.Split();
+                userData.Paths = newUserData;
             }
             else
             {
-              MessageBox.Show("Not a valid path");
+                MessageBox.Show("Not a valid path");
             }
         }
         if (isValid)
         {
-                tb.Enabled = false;
-                textBoxesList.Add(tb);
+            tb.Enabled = false;
+            textBoxesList.Add(tb);
         }
     }
     private void MakeJsonFile(UserData data, List<TextBox> textsList)
@@ -192,7 +192,8 @@ public partial class Form1 : Form
         {
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             MessageBox.Show(jsonString, "Data");
-            File.WriteAllText($"user{userID++}_data.json", jsonString);
+            string fileName = $"user{userID++}_data.json";
+            File.WriteAllText(fileName, jsonString);
         }
     }
     private bool CheckIfTextIsEmpty(List<TextBox> textBoxesList)
@@ -235,5 +236,28 @@ public partial class Form1 : Form
                 }
             }
         }
+    }
+
+    private void Calender_tab_clicked(object sender, PaintEventArgs e)
+    {
+
+
+    }
+
+    private void timestable_PanelLayout(object sender, PaintEventArgs e)
+    {
+
+    }
+
+    // show calendar elements
+    private void button1_Click(object sender, EventArgs e)
+    {
+        Calendar.ShowCalendarElements(tableLayoutPanel3);
+        
+    }
+    // show times table elements
+    private void button2_Click(object sender, EventArgs e)
+    {
+        Calendar.ShowCalendarTimesElements(tableLayoutPanel4);
     }
 }

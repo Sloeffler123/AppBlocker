@@ -16,23 +16,27 @@ namespace AppBlockerAddFilesToList
             
             Console.WriteLine();
             
-            RunApplication.DetectIfFilesAreRunning();
+            //RunApplication.DetectIfFilesAreRunning();
         }
 
         // check if file exists and add the path to a list
-        public static bool CheckIfFileOrDirectory(string path)
+        public static bool CheckIfFileOrDirectory(string[] paths)
         {
-            if (File.Exists(path))
+            int count = 0;
+            foreach (var path in paths)
             {
-                AddFile(path);
-                return true;
+                if (File.Exists(path))
+                {
+                    AddFile(path);
+                    count += 1;
+                }
+                else if (Directory.Exists(path))
+                {
+                    DirectoryFilesToBlock(path);
+                    count += 1;
+                }
             }
-            else if (Directory.Exists(path))
-            {
-                DirectoryFilesToBlock(path);
-                return true;
-            }
-            return false;
+            return count == paths.Length;
         }
         public static bool CheckCorrectDaysFormat(string days)
         {
@@ -104,10 +108,19 @@ namespace AppBlockerAddFilesToList
                 Console.WriteLine($"{path} could not be found. Please double check spelling");
             }
         }
-
-        // check if time frame given is valid (Helper method)
+        
+        public static bool CheckIfTimeFrameIsNotLarger(string timeFrame)
+        {
+            var splitTimeFrame = timeFrame.Split("-");
+            return (int.Parse(splitTimeFrame[0].Replace(":", "")) >= int.Parse(splitTimeFrame[1].Replace(":", "")));
+            
+        }
         public static bool CheckIfTimeFrameValid(string timeFrame)
         {
+            if (CheckIfTimeFrameIsNotLarger(timeFrame))
+            {
+                return false;
+            }
             List<string> times = new();
             var firstPart = "";
             var secondPart = "";
