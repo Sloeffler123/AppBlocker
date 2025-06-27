@@ -32,6 +32,30 @@ namespace AppBlockerCalendarWinForms
         {
             return days.Split("-");
         }
+        // loop through the enum and compare the days from split days to fill in the gaps
+        public static List<string> LoopThroughEnumToFindMatchingDays(string[] daysSplit)
+        {
+            bool triggered = false;
+            List<string> daysList = new();
+            foreach (string days in Enum.GetNames(typeof(Days)))
+            {
+                if (triggered)
+                {
+                    daysList.Add(days);
+                }
+                else if (days == daysSplit[0])
+                {
+                    triggered = true;
+                    daysList.Add(days);
+                }
+                else if (days == daysSplit[1])
+                {
+                    daysList.Add(days);
+                    break;
+                }
+            }
+            return daysList;
+        }
         public static void ShowCalendarTimesElements(Control tableLayout)
         {
             foreach (Control ctrl in tableLayout.Controls)
