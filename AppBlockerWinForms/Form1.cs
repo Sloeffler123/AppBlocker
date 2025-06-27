@@ -2,6 +2,7 @@ using AppBlockerAddFilesToList;
 using System.Diagnostics;
 using System.Text.Json;
 using AppBlockerCalendarWinForms;
+using AppBlockerRunApplication;
 using static AppBlockerWinForms.Form1;
 
 namespace AppBlockerWinForms;
@@ -186,13 +187,21 @@ public partial class Form1 : Form
             textBoxesList.Add(tb);
         }
     }
+    public string GetJsonFileName()
+    {
+        return $"user{userID}_data.json";
+    }
+    public string IncreaseUserID()
+    {
+        return $"user{userID++}_data.json";
+    }
     private void MakeJsonFile(UserData data, List<TextBox> textsList)
     {
         if (CheckIfTextIsEmpty(textsList))
         {
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             MessageBox.Show(jsonString, "Data");
-            string fileName = $"user{userID++}_data.json";
+            string fileName = IncreaseUserID();
             File.WriteAllText(fileName, jsonString);
         }
     }
@@ -238,8 +247,18 @@ public partial class Form1 : Form
         }
     }
 
+    // use json methods from runapplication
     private void Calender_tab_clicked(object sender, PaintEventArgs e)
     {
+        // get json time and days
+        // compare them to the table layout to find out where the block should go
+        // first find the days
+        // then find the times
+        var jsonFileName = GetJsonFileName();
+        using var doc = RunApplication.LoadJson(jsonFileName);
+        var root = doc.RootElement;
+        var time = RunApplication.GetJsonTimeProperty(root);
+        var days = RunApplication.GetJsonDaysProperty(root);
 
 
     }
