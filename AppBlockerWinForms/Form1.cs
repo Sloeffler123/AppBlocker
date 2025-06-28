@@ -133,7 +133,12 @@ public partial class Form1 : Form
                 btn.Visible = true;
             }
         }
-        MakeJsonFile(userData, textBoxes);
+        var execute = MakeJsonFile(userData, textBoxes);
+        // write info to calendar tab
+        if (execute)
+        {
+            SaveCalendarTab();
+        }
     }
     private void HandleTextBox(TextBox tb, UserData userData, List<TextBox> textBoxesList)
     {
@@ -193,9 +198,9 @@ public partial class Form1 : Form
     }
     public string IncreaseUserID()
     {
-        return $"user{userID++}_data.json";
+        return $"user{userID += 1}_data.json";
     }
-    private void MakeJsonFile(UserData data, List<TextBox> textsList)
+    private bool MakeJsonFile(UserData data, List<TextBox> textsList)
     {
         if (CheckIfTextIsEmpty(textsList))
         {
@@ -203,7 +208,9 @@ public partial class Form1 : Form
             MessageBox.Show(jsonString, "Data");
             string fileName = IncreaseUserID();
             File.WriteAllText(fileName, jsonString);
+            return true;
         }
+        return false;
     }
     private bool CheckIfTextIsEmpty(List<TextBox> textBoxesList)
     {
@@ -248,7 +255,8 @@ public partial class Form1 : Form
     }
 
     // use json methods from runapplication
-    private void Calender_tab_clicked(object sender, PaintEventArgs e)
+    
+    private void SaveCalendarTab()
     {
         // get json time and days
         // compare them to the table layout to find out where the block should go
@@ -259,24 +267,23 @@ public partial class Form1 : Form
         var root = doc.RootElement;
         var time = RunApplication.GetJsonTimeProperty(root);
         var days = RunApplication.GetJsonDaysProperty(root);
+        var blockName = RunApplication.GetJsonBlockNameProperty(root);
 
+        // days list 
+        List<string> daysList = Calendar.LoopThroughEnumToFindMatchingDays(Calendar.SplitDays(days));
 
-    }
-
-    private void timestable_PanelLayout(object sender, PaintEventArgs e)
-    {
-
+        Calendar.ShowCalendarElements(tableLayoutPanel3, daysList, time, tableLayoutPanel4, blockName, panel2);
     }
 
     // show calendar elements
     private void button1_Click(object sender, EventArgs e)
     {
-        Calendar.ShowCalendarElements(tableLayoutPanel3);
-        
+
+
     }
     // show times table elements
     private void button2_Click(object sender, EventArgs e)
     {
-        Calendar.ShowCalendarTimesElements(tableLayoutPanel4);
+        Calendar.ShowCalendarTimesElements(tableLayoutPanel4, "wednesday-");
     }
 }

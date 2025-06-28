@@ -14,27 +14,41 @@ namespace AppBlockerCalendarWinForms
             Friday,
             Saturday
         }
-        
-        public static void ShowCalendarElements(Control tableLayout, List<string> days)
+
+        public static void ShowCalendarElements(Control tableLayout, List<string> days, string times, Control timesTableLayout, string blockName, Panel dayPanel)
         {
             
-            
 
+            // loop through each day in the table layout
             foreach (Control ctrl in tableLayout.Controls)
             {
-                foreach(var day in days)
+          
+                // loop through each day that was stated inside the json file
+                foreach (var day in days)
                 {
-                    if (day == ctrl.Name)
-                    {
-                        // if this is true need to find the time frame in the other 
-                        // panel table layout
+                    // if they match go into that column and place a textbox
+                    if (day == ctrl.Text)
+                    { 
+                        (int firstLocationY, int sizeY) location = ShowCalendarTimesElements(timesTableLayout, times);
+                        
+                        var sizeY = location.sizeY;
+                        var firstLocationY = location.firstLocationY;
 
+                        TextBox blockTextBox = new();
+                        
+                        blockTextBox.Multiline = true;
+                        blockTextBox.Text = blockName;
+                        blockTextBox.Location = new Point(3, firstLocationY);
+                        blockTextBox.Size = new Size(128, sizeY);
+                        blockTextBox.Enabled = false;
+                        blockTextBox.TextAlign = HorizontalAlignment.Center;
+                        dayPanel.Controls.Add(blockTextBox);
                     }
                 }
             }
         }
         // find time the user input and compare it to the table layout panel
-        
+
         public static string[] SplitTimes(string times)
         {
             return times.Split("-");
@@ -43,6 +57,7 @@ namespace AppBlockerCalendarWinForms
         {
             return days.Split("-");
         }
+
         // loop through the enum and compare the days from split days to fill in the gaps
         public static List<string> LoopThroughEnumToFindMatchingDays(string[] daysSplit)
         {
@@ -50,11 +65,8 @@ namespace AppBlockerCalendarWinForms
             List<string> daysList = new();
             foreach (string days in Enum.GetNames(typeof(Days)))
             {
-                if (triggered)
-                {
-                    daysList.Add(days);
-                }
-                else if (days == daysSplit[0])
+                
+                if (days == daysSplit[0])
                 {
                     triggered = true;
                     daysList.Add(days);
@@ -64,30 +76,51 @@ namespace AppBlockerCalendarWinForms
                     daysList.Add(days);
                     break;
                 }
+                else if (triggered)
+                {
+                    daysList.Add(days);
+                }
             }
             return daysList;
         }
         public static (int, int) ShowCalendarTimesElements(Control tableLayout, string times)
         {
-            // need to get the location of the text box and make a text box 
-            // based off of the most recent time and last time so the location should only have two numbers when this loop completes
             var splitTimes = SplitTimes(times);
-            int locationOne = 0;
-            int locationTwo = 0;
+
+            // need to sort the control list here to get correct order
+            List<Control> correctOrder = new();
             foreach (Control ctrl in tableLayout.Controls)
             {
+                correctOrder.Add(ctrl);
+            }
+            // sort the correct order
+            var sortedList = correctOrder.OrderBy(c => c.Name).ToList();
+
+            int firstYCoord = 0;
+            int counter = 0;
+            bool triggered = false;
+
+            foreach (var ctrl in sortedList)
+            {
+                
                 if (ctrl.Text == splitTimes[0])
                 {
-                    locationOne = ctrl.Location.Y;
+                    triggered = true;
+                    counter += 1;
+                    firstYCoord = ctrl.Location.Y;
                 }
                 else if (ctrl.Text == splitTimes[1])
                 {
-                    locationTwo = ctrl.Location.Y;
+                    counter += 1;
                     break;
                 }
+                else if (triggered)
+                {
+                    counter += 1;
+                }
             }
-            // returns the y coord only locationOne is the first time Y coord locationTwo is the second time Y coord
-            return (locationOne, locationTwo);
+            // default size starts at 23
+            return (firstYCoord, counter * 30 + 23);
         }
     }
 }

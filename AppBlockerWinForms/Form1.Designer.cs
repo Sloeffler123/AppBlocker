@@ -68,6 +68,7 @@ partial class Form1
         textBox42 = new TextBox();
         textBox43 = new TextBox();
         textBox28 = new TextBox();
+        panel2 = new Panel();
         Help = new TabPage();
         textBox3 = new TextBox();
         textBox2 = new TextBox();
@@ -78,8 +79,6 @@ partial class Form1
         AddButton = new Button();
         ActiveBlocks = new Label();
         Tabs = new TabControl();
-        button1 = new Button();
-        button2 = new Button();
         ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
         tabPage1.SuspendLayout();
         panel1.SuspendLayout();
@@ -136,6 +135,7 @@ partial class Form1
         tableLayoutPanel3.Controls.Add(textBox17, 1, 0);
         tableLayoutPanel3.Controls.Add(textBox18, 0, 0);
         tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 1);
+        tableLayoutPanel3.Controls.Add(panel2, 1, 1);
         tableLayoutPanel3.Location = new Point(4, -3);
         tableLayoutPanel3.Name = "tableLayoutPanel3";
         tableLayoutPanel3.RowCount = 2;
@@ -518,6 +518,13 @@ partial class Form1
         textBox28.TabIndex = 9;
         textBox28.Text = "09:00";
         // 
+        // panel2
+        // 
+        panel2.Location = new Point(72, 30);
+        panel2.Name = "panel2";
+        panel2.Size = new Size(134, 746);
+        panel2.TabIndex = 9;
+        // 
         // Help
         // 
         Help.Controls.Add(textBox3);
@@ -622,33 +629,11 @@ partial class Form1
         Tabs.Size = new Size(1071, 471);
         Tabs.TabIndex = 3;
         // 
-        // button1
-        // 
-        button1.Location = new Point(470, 511);
-        button1.Name = "button1";
-        button1.Size = new Size(75, 23);
-        button1.TabIndex = 4;
-        button1.Text = "button1";
-        button1.UseVisualStyleBackColor = true;
-        button1.Click += button1_Click;
-        // 
-        // button2
-        // 
-        button2.Location = new Point(610, 511);
-        button2.Name = "button2";
-        button2.Size = new Size(75, 23);
-        button2.TabIndex = 5;
-        button2.Text = "button2";
-        button2.UseVisualStyleBackColor = true;
-        button2.Click += button2_Click;
-        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1163, 591);
-        Controls.Add(button2);
-        Controls.Add(button1);
         Controls.Add(Tabs);
         Name = "Form1";
         Text = "Form1";
@@ -717,6 +702,5 @@ partial class Form1
     private TextBox textBox42;
     private TextBox textBox28;
     private TextBox textBox43;
-    private Button button1;
-    private Button button2;
+    private Panel panel2;
 }
