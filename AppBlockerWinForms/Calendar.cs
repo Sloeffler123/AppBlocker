@@ -1,5 +1,6 @@
 using AppBlockerWinForms;
 using AppBlockerRunApplication;
+using static AppBlockerWinForms.Form1;
 namespace AppBlockerCalendarWinForms
 {
     public class Calendar
@@ -15,7 +16,7 @@ namespace AppBlockerCalendarWinForms
             Saturday
         }
 
-        public static void ShowCalendarElements(Control tableLayout, List<string> days, string times, Control timesTableLayout, string blockName, Panel dayPanel)
+        public static void ShowCalendarElements(Control tableLayout, List<string> days, string times, Control timesTableLayout, string blockName, Panel sundayPanel, Panel mondayPanel, Panel tuesdayPanel, Panel wednesdayPanel, Panel thursdayPanel, Panel fridayPanel, Panel saturdayPanel)
         {
             
 
@@ -42,13 +43,45 @@ namespace AppBlockerCalendarWinForms
                         blockTextBox.Size = new Size(128, sizeY);
                         blockTextBox.Enabled = false;
                         blockTextBox.TextAlign = HorizontalAlignment.Center;
-                        dayPanel.Controls.Add(blockTextBox);
+                        var correctPanel = FindCorrectPanel(day, sundayPanel, mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel);
+                        var panelName = $"{ctrl.Text}Panel";
+                        correctPanel.Controls.Add(blockTextBox);
                     }
                 }
             }
         }
         // find time the user input and compare it to the table layout panel
+        public static Panel FindCorrectPanel(string day, Panel sundayPanel, Panel mondayPanel, Panel tuesdayPanel, Panel wednesdayPanel, Panel thursdayPanel, Panel fridayPanel, Panel saturdayPanel)
+        {
+            string name = "Panel";
+            switch (day)
+            {
+                case "Sunday":
+                    return sundayPanel;
 
+                case "Monday":
+                    return mondayPanel;
+
+                case "Tuesday":
+                    return tuesdayPanel;
+
+                case "Wednesday":
+                    return wednesdayPanel;
+
+                case "Thursday":
+                    return thursdayPanel;
+
+                case "Friday":
+                    return fridayPanel;
+
+                case "Saturday":
+                    return saturdayPanel;
+
+                default:
+                    MessageBox.Show("Find correct panel did not work");
+                    return sundayPanel;
+            }
+        }
         public static string[] SplitTimes(string times)
         {
             return times.Split("-");
@@ -120,7 +153,7 @@ namespace AppBlockerCalendarWinForms
                 }
             }
             // default size starts at 23
-            return (firstYCoord, counter * 30 + 23);
+            return (firstYCoord, counter * 30 - 4);
         }
     }
 }

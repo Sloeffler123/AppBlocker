@@ -272,13 +272,13 @@ public partial class Form1 : Form
         // days list 
         List<string> daysList = Calendar.LoopThroughEnumToFindMatchingDays(Calendar.SplitDays(days));
 
-        Calendar.ShowCalendarElements(tableLayoutPanel3, daysList, time, tableLayoutPanel4, blockName, panel2);
+        Calendar.ShowCalendarElements(tableLayoutPanel3, daysList, time, tableLayoutPanel4, blockName, SundayPanel, MondayPanel, TuesdayPanel, WednesdayPanel, ThursdayPanel, FridayPanel, SaturdayPanel);
     }
 
     // show calendar elements
     private void button1_Click(object sender, EventArgs e)
     {
-
+        
 
     }
     // show times table elements
