@@ -3,6 +3,7 @@ using AppBlockerRunApplication;
 using System.Runtime.ExceptionServices;
 using System.Security.Cryptography.X509Certificates;
 
+
 namespace AppBlockerAddFilesToList
 {
     public static class Files
@@ -11,13 +12,17 @@ namespace AppBlockerAddFilesToList
 
         public static string timeFrameToBlock;
         // main loop
+        public static void Main()
+        {
 
+        }
         // check if file exists and add the path to a list
         public static bool CheckIfFileOrDirectory(string[] paths)
         {
             int count = 0;
             foreach (var path in paths)
             {
+
                 if (File.Exists(path))
                 {
                     AddFile(path);
@@ -97,6 +102,7 @@ namespace AppBlockerAddFilesToList
             return (int.Parse(splitTimeFrame[0].Replace(":", "")) >= int.Parse(splitTimeFrame[1].Replace(":", "")));
             
         }
+
         public static bool CheckIfTimeFrameValid(string timeFrame)
         {
             if (CheckIfTimeFrameIsNotLarger(timeFrame))

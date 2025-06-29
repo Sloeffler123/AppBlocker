@@ -1,6 +1,4 @@
-using AppBlockerWinForms;
-using AppBlockerRunApplication;
-using static AppBlockerWinForms.Form1;
+
 namespace AppBlockerCalendarWinForms
 {
     public class Calendar
@@ -18,12 +16,9 @@ namespace AppBlockerCalendarWinForms
 
         public static void ShowCalendarElements(Control tableLayout, List<string> days, string times, Control timesTableLayout, string blockName, Panel sundayPanel, Panel mondayPanel, Panel tuesdayPanel, Panel wednesdayPanel, Panel thursdayPanel, Panel fridayPanel, Panel saturdayPanel)
         {
-            
-
             // loop through each day in the table layout
             foreach (Control ctrl in tableLayout.Controls)
             {
-          
                 // loop through each day that was stated inside the json file
                 foreach (var day in days)
                 {
@@ -98,7 +93,6 @@ namespace AppBlockerCalendarWinForms
             List<string> daysList = new();
             foreach (string days in Enum.GetNames(typeof(Days)))
             {
-                
                 if (days == daysSplit[0])
                 {
                     triggered = true;

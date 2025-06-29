@@ -1,9 +1,0 @@
-{
-  "Blockset": "Block Name (Optional)",
-  "Time": "01:00-04:00",
-  "Days": "Friday-Saturday",
-  "Paths": [
-    "C:\\Users\\samlo\\Downloads\\Windows11InstallationAssistant.exe",
-    "C:\\Users\\samlo\\Downloads\\Cold_Turkey_Installer.exe"
-  ]
-}

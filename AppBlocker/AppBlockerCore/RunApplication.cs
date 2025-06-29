@@ -1,7 +1,6 @@
 
-using System;
+
 using System.Diagnostics;
-using System.IO;
 using System.Text.Json;
 namespace AppBlockerRunApplication
 {
@@ -31,7 +30,6 @@ namespace AppBlockerRunApplication
         public static string GetJsonBlockNameProperty(JsonElement root) =>
             root.GetProperty("Blockset").GetString();
         
-            
         public static void MainKillLoop(string fileName)
         {
             using var doc = LoadJson(fileName);

@@ -1,10 +1,8 @@
 using AppBlockerAddFilesToList;
-using System.Diagnostics;
-using System.Text.Json;
 using AppBlockerCalendarWinForms;
 using AppBlockerRunApplication;
-using static AppBlockerWinForms.Form1;
-
+using System;
+using System.Text.Json;
 namespace AppBlockerWinForms;
 
 public partial class Form1 : Form
@@ -105,7 +103,6 @@ public partial class Form1 : Form
         };
         container.Tag = userData;
     }
-
     private void SaveButton_Clicked(object sender, EventArgs e)
     {
         Button saveButton = sender as Button;
@@ -175,10 +172,12 @@ public partial class Form1 : Form
         }
         else if (tb.Name.StartsWith("textbox4_"))
         {
-            isValid = Files.CheckIfFileOrDirectory(tb.Text.Split());
+            var splitText = tb.Text.Replace("\r", "").Split("\n");
+            MessageBox.Show(string.Join(",", splitText));
+            isValid = Files.CheckIfFileOrDirectory(splitText);
             if (isValid)
             {
-                var newUserData = tb.Text.Split();
+                var newUserData = splitText;
                 userData.Paths = newUserData;
             }
             else
@@ -196,6 +195,7 @@ public partial class Form1 : Form
     {
         return $"user{userID}_data.json";
     }
+    // have to change this to blockID once sql is made 
     public string IncreaseUserID()
     {
         return $"user{userID += 1}_data.json";
@@ -253,15 +253,9 @@ public partial class Form1 : Form
             }
         }
     }
-
     // use json methods from runapplication
-    
     private void SaveCalendarTab()
     {
-        // get json time and days
-        // compare them to the table layout to find out where the block should go
-        // first find the days
-        // then find the times
         var jsonFileName = GetJsonFileName();
         using var doc = RunApplication.LoadJson(jsonFileName);
         var root = doc.RootElement;
@@ -273,17 +267,5 @@ public partial class Form1 : Form
         List<string> daysList = Calendar.LoopThroughEnumToFindMatchingDays(Calendar.SplitDays(days));
 
         Calendar.ShowCalendarElements(tableLayoutPanel3, daysList, time, tableLayoutPanel4, blockName, SundayPanel, MondayPanel, TuesdayPanel, WednesdayPanel, ThursdayPanel, FridayPanel, SaturdayPanel);
-    }
-
-    // show calendar elements
-    private void button1_Click(object sender, EventArgs e)
-    {
-        
-
-    }
-    // show times table elements
-    private void button2_Click(object sender, EventArgs e)
-    {
-        Calendar.ShowCalendarTimesElements(tableLayoutPanel4, "wednesday-");
     }
 }
