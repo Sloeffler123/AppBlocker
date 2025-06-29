@@ -11,13 +11,6 @@ namespace AppBlockerAddFilesToList
 
         public static string timeFrameToBlock;
         // main loop
-        public static void Main()
-        {
-            
-            Console.WriteLine();
-            
-            //RunApplication.DetectIfFilesAreRunning();
-        }
 
         // check if file exists and add the path to a list
         public static bool CheckIfFileOrDirectory(string[] paths)
@@ -38,19 +31,18 @@ namespace AppBlockerAddFilesToList
             }
             return count == paths.Length;
         }
+
         public static bool CheckCorrectDaysFormat(string days)
         {
             string[] allDays = new string[] { 
+                "sunday",
                 "monday", 
                 "tuesday", 
                 "wednesday", 
                 "thursday", 
                 "friday", 
-                "saturday", 
-                "sunday", 
+                "saturday"  
             };
-
-            
             string firstPart = "";
             string secondPart = "";
             bool triggered = false;
@@ -80,18 +72,14 @@ namespace AppBlockerAddFilesToList
             }
             return true;
         }
+
         public static void AddFile(string path)
         {
-            
             if (path.EndsWith(".exe"))
             {
-            path = path.Replace(".exe", "");
-            Console.WriteLine($"{path} - Added");
-            filePaths.Add(path);
-            }
-            else
-            {
-                Console.WriteLine($"{path} could not be found. Please double check spelling");
+                path = path.Replace(".exe", "");
+                
+                filePaths.Add(path);
             }
         }
 
@@ -99,13 +87,7 @@ namespace AppBlockerAddFilesToList
         {
             if (Directory.Exists(path))
             {
-                Console.WriteLine($"{path} - Added");
-                // open directory and add the files to the list to block
                 DirectoryFilesToBlock(path);
-            }
-            else
-            {
-                Console.WriteLine($"{path} could not be found. Please double check spelling");
             }
         }
         

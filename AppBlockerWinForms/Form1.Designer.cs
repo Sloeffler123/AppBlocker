@@ -34,6 +34,12 @@ partial class Form1
         tabPage1 = new TabPage();
         panel1 = new Panel();
         tableLayoutPanel3 = new TableLayoutPanel();
+        SaturdayPanel = new Panel();
+        FridayPanel = new Panel();
+        ThursdayPanel = new Panel();
+        WednesdayPanel = new Panel();
+        TuesdayPanel = new Panel();
+        MondayPanel = new Panel();
         textBox11 = new TextBox();
         textBox12 = new TextBox();
         textBox13 = new TextBox();
@@ -79,12 +85,6 @@ partial class Form1
         AddButton = new Button();
         ActiveBlocks = new Label();
         Tabs = new TabControl();
-        MondayPanel = new Panel();
-        TuesdayPanel = new Panel();
-        WednesdayPanel = new Panel();
-        ThursdayPanel = new Panel();
-        FridayPanel = new Panel();
-        SaturdayPanel = new Panel();
         ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
         tabPage1.SuspendLayout();
         panel1.SuspendLayout();
@@ -155,6 +155,48 @@ partial class Form1
         tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 96.55612F));
         tableLayoutPanel3.Size = new Size(1049, 784);
         tableLayoutPanel3.TabIndex = 1;
+        // 
+        // SaturdayPanel
+        // 
+        SaturdayPanel.Location = new Point(907, 30);
+        SaturdayPanel.Name = "SaturdayPanel";
+        SaturdayPanel.Size = new Size(134, 746);
+        SaturdayPanel.TabIndex = 15;
+        // 
+        // FridayPanel
+        // 
+        FridayPanel.Location = new Point(769, 30);
+        FridayPanel.Name = "FridayPanel";
+        FridayPanel.Size = new Size(132, 746);
+        FridayPanel.TabIndex = 14;
+        // 
+        // ThursdayPanel
+        // 
+        ThursdayPanel.Location = new Point(631, 30);
+        ThursdayPanel.Name = "ThursdayPanel";
+        ThursdayPanel.Size = new Size(132, 746);
+        ThursdayPanel.TabIndex = 13;
+        // 
+        // WednesdayPanel
+        // 
+        WednesdayPanel.Location = new Point(492, 30);
+        WednesdayPanel.Name = "WednesdayPanel";
+        WednesdayPanel.Size = new Size(133, 746);
+        WednesdayPanel.TabIndex = 12;
+        // 
+        // TuesdayPanel
+        // 
+        TuesdayPanel.Location = new Point(354, 30);
+        TuesdayPanel.Name = "TuesdayPanel";
+        TuesdayPanel.Size = new Size(132, 746);
+        TuesdayPanel.TabIndex = 11;
+        // 
+        // MondayPanel
+        // 
+        MondayPanel.Location = new Point(212, 30);
+        MondayPanel.Name = "MondayPanel";
+        MondayPanel.Size = new Size(134, 746);
+        MondayPanel.TabIndex = 10;
         // 
         // textBox11
         // 
@@ -640,48 +682,6 @@ partial class Form1
         Tabs.SelectedIndex = 0;
         Tabs.Size = new Size(1071, 471);
         Tabs.TabIndex = 3;
-        // 
-        // MondayPanel
-        // 
-        MondayPanel.Location = new Point(212, 30);
-        MondayPanel.Name = "MondayPanel";
-        MondayPanel.Size = new Size(134, 746);
-        MondayPanel.TabIndex = 10;
-        // 
-        // TuesdayPanel
-        // 
-        TuesdayPanel.Location = new Point(354, 30);
-        TuesdayPanel.Name = "TuesdayPanel";
-        TuesdayPanel.Size = new Size(132, 746);
-        TuesdayPanel.TabIndex = 11;
-        // 
-        // WednesdayPanel
-        // 
-        WednesdayPanel.Location = new Point(492, 30);
-        WednesdayPanel.Name = "WednesdayPanel";
-        WednesdayPanel.Size = new Size(133, 746);
-        WednesdayPanel.TabIndex = 12;
-        // 
-        // ThursdayPanel
-        // 
-        ThursdayPanel.Location = new Point(631, 30);
-        ThursdayPanel.Name = "ThursdayPanel";
-        ThursdayPanel.Size = new Size(132, 746);
-        ThursdayPanel.TabIndex = 13;
-        // 
-        // FridayPanel
-        // 
-        FridayPanel.Location = new Point(769, 30);
-        FridayPanel.Name = "FridayPanel";
-        FridayPanel.Size = new Size(132, 746);
-        FridayPanel.TabIndex = 14;
-        // 
-        // SaturdayPanel
-        // 
-        SaturdayPanel.Location = new Point(907, 30);
-        SaturdayPanel.Name = "SaturdayPanel";
-        SaturdayPanel.Size = new Size(134, 746);
-        SaturdayPanel.TabIndex = 15;
         // 
         // Form1
         // 
